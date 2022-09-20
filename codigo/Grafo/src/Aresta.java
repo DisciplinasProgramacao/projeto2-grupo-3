@@ -28,7 +28,7 @@ public class Aresta {
     private int peso;
     private int destino;
     private boolean visitada;
-//#endregion
+    //#endregion
 
     /**
      * Construtor para arestas com ou sem peso
@@ -42,9 +42,17 @@ public class Aresta {
         this.visitada = false;
     }
     //#region Métodos públicos
+
+    /**
+    * Marca a arresta como visitada
+    */
     public void visitar() {
         this.visitada = true;
     }
+
+    /**
+    * Desmarca arresta da condição de visitada.
+    */
     public void limparVisita() {
         this.visitada = false;
     }

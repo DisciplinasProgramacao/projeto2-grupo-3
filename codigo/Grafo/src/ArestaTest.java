@@ -27,6 +27,7 @@ public class ArestaTest {
     @Test
     public void limpaVisita() {
         aresta.visitar();
+        assertTrue(aresta.isVisitada());
         aresta.limparVisita();
         assertFalse(aresta.isVisitada());
     }

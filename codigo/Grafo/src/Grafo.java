@@ -1,3 +1,5 @@
+import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.IntegerConversion;
+
 /** 
  * MIT License
  *
@@ -25,8 +27,9 @@
 /** 
  * Classe básica para um Grafo simples
  */
-public class Grafo {
+public abstract class Grafo {
     public final String nome;
+    //Na uml tem um # nessa propriedade e eu não sei o que significa
     private ABB<Vertice> vertices;
 
     /**
@@ -35,41 +38,6 @@ public class Grafo {
     public Grafo(String nome){
         this.nome = nome;
         this.vertices = new ABB<>();
-    }
-
-    public void carregar(String nomeArquivo){
-
-    }
-
-    public void salvar(String nomeArquivo){
-        
-    }
-    /**
-     * Adiciona, se possível, um vértice ao grafo. O vértice é auto-nomeado com o próximo id disponível.
-     */
-    public boolean addVertice(int id){
-        Vertice novo = new Vertice(id);
-        return this.vertices.add(id, novo);
-    }
-
-    /**
-     * Adiciona uma aresta entre dois vértices do grafo. 
-     * Não verifica se os vértices pertencem ao grafo.
-     * @param origem Vértice de origem
-     * @param destino Vértice de destino
-     */
-    public boolean addAresta(int origem, int destino){
-        boolean adicionou = false;
-        Vertice saida = this.existeVertice(origem);
-        Vertice chegada = this.existeVertice(destino);
-        if(saida!=null && chegada !=null){
-            saida.addAresta(destino);
-            chegada.addAresta(origem);
-            adicionou = true;
-        }
-        
-        return adicionou;
-
     }
 
     public Vertice existeVertice(int idVertice){
@@ -90,15 +58,21 @@ public class Grafo {
        return resposta;
     }
 
-    public Grafo subGrafo(Lista<Vertice> vertices){
-        Grafo subgrafo = new Grafo("Subgrafo de "+this.nome);
-        
-
-        return subgrafo;
-    }
+    public abstract Grafo subGrafo(Lista<Vertice> vertices);
     
     public int tamanho(){
-        return 0;
+
+        var verticesNumber = vertices.size();
+        var arestaNumber = 0;
+
+        Vertice[] verticeArray = new Vertice[vertices.size()];
+        verticeArray =vertices.allElements(verticeArray);
+
+        for(var v : verticeArray) {
+            arestaNumber += v.arestasNumber();
+        }
+
+        return arestaNumber + verticesNumber;
     }
 
     public int ordem(){

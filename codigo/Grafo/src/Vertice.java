@@ -76,4 +76,8 @@ public class Vertice {
     public boolean visitado(){
         return this.visitado;
     }
+
+    public int arestasNumber(){
+        return this.arestas.size();
+    }
 }

@@ -29,4 +29,8 @@ public class ABB<T> {
         T[] allData = this.data.values().toArray(array);
         return allData;
     }
+
+    public Integer[] allKeys(){
+        return (Integer[])this.data.keySet().toArray();
+    }
 }

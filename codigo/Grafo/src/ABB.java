@@ -20,7 +20,20 @@ public class ABB<T> {
         }
         return result;
     }
-    
+
+    public boolean remove(int key){
+        boolean result = false;
+        if(this.data.containsKey(key)){
+            this.data.remove(key);
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean containsKey(Object key) {
+        return data.containsKey((int)key);
+    }
+
     public int size(){
         return this.data.size();
     }

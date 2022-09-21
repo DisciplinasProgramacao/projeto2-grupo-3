@@ -1,4 +1,4 @@
-
+import java.io.Serializable;
 
 /** 
  * MIT License
@@ -27,10 +27,12 @@
 /** 
  * Classe básica para um Grafo simples
  */
-public abstract class Grafo {
-    public final String nome;
+public abstract class Grafo implements Serializable{
+
+    private static final long serialVersionUID = 7100179587555243994L;
+    protected final String nome;
     //Na uml tem um # nessa propriedade e eu não sei o que significa
-    private ABB<Vertice> vertices;
+    protected ABB<Vertice> vertices;
 
     /**
      * Construtor. Cria um grafo vazio com capacidade para MAX_VERTICES

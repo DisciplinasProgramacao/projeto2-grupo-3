@@ -25,10 +25,10 @@
 public class Vertice {
     
     private ABB<Aresta> arestas;    
-    private final int  id;
+    private final int id;
     private boolean visitado;
 
-/**
+    /**
      * Construtor para criação de vértice identificado
      * @param id Número/id do vértice a ser criado (atributo final).
      */
@@ -38,7 +38,7 @@ public class Vertice {
         this.visitado = false;
     }
     
-  /**
+    /**
      * Adiciona uma aresta neste vértice para um destino
      * @param peso Peso da aresta (1 para grafos não ponderados)
      * @param dest Vértice de destino
@@ -79,5 +79,16 @@ public class Vertice {
 
     public int arestasNumber(){
         return this.arestas.size();
+    }
+    public boolean delAresta(int destino){
+        
+        var retorno = false;
+
+        if(arestas.containsKey(destino)){
+            arestas.remove(destino);
+            retorno = true;
+        }
+
+        return retorno;
     }
 }

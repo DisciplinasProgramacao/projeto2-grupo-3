@@ -19,29 +19,18 @@ public class GrafoCompleto extends Grafo {
                     vetorVertices[i].addAresta(aresta.getDestino());
                 }
             }
-            
+
         }
-            
 
         return null;
     }
-
+//TODO euleriano incompleto
 
     /**
      * Verifica se o grafo satisfaz as condições para ser euleriano
      *
      * @return TRUE caso seja euleriano, FALSE caso não seja
      */
-    public boolean euleriano() {
-        Vertice[] vetorVertices = new Vertice[vertices.size()];
-        vetorVertices = vertices.allElements(vetorVertices);
-        for (int i = 0; i < vertices.size(); i++) {
-            if (vetorVertices[i].arestasNumber() % 2 != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     //TODO Não consegui pensar em como fazer o subgrafo

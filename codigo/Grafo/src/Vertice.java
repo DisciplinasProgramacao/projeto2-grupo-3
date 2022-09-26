@@ -23,8 +23,9 @@
  */
 
 public class Vertice {
-    
-    private ABB<Aresta> arestas;    
+
+
+    private ABB<Aresta> arestas;
     private final int id;
     private boolean visitado;
 
@@ -91,4 +92,9 @@ public class Vertice {
 
         return retorno;
     }
+    public ABB<Aresta> getArestas() {
+        return arestas;
+    }
+
+
 }

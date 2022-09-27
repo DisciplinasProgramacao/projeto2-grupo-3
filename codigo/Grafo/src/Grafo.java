@@ -31,20 +31,87 @@ public abstract class Grafo implements Serializable {
 
     private static final long serialVersionUID = 7100179587555243994L;
     protected final String nome;
-    //Na uml tem um # nessa propriedade e eu não sei o que significa
     protected ABB<Vertice> vertices;
 
     /**
      * Construtor. Cria um grafo vazio com capacidade para MAX_VERTICES
+     * @param nome nome do grafo
      */
     public Grafo(String nome) {
         this.nome = nome;
         this.vertices = new ABB<>();
     }
 
+    /**
+     * Construtor. Cria um grafo vazio com capacidade para MAX_VERTICES
+     * @param nome Retorna uma lista de vertices que representam um grafo aureliano cvriado a partir do grafo atual
+     */
+    public Lista<Vertice> caminhoEureliano(){
+        
+        Lista<Vertice> retorno = new Lista<>();
+        Vertice[] vetorVertices = new Vertice[vertices.size()];
+        vetorVertices = vertices.allElements(vetorVertices);
+
+        for(int i=0; i < vetorVertices.length; i++){
+            //Retirando desconexos e desconexos com laços
+            if(vetorVertices[i].arestasNumber() == 0 || (vetorVertices[i].arestasNumber() == 1 && vetorVertices[i].existeAresta(vetorVertices[i].getId()) != null)){
+                vetorVertices[i] = null;
+            }
+
+            if(vetorVertices[i] != null){
+                //Torna as vertices pares pra cada aresta
+                if(vetorVertices[i].arestasNumber() % 2 != 0){
+                    for(int j=0; i < vetorVertices.length; j++){
+                        
+                        if(i == j)
+                            continue;
+                        
+                        if(existeAresta(vetorVertices[i].getId(), vetorVertices[j].getId()) == null){
+                            vetorVertices[i].addAresta(vetorVertices[j].getId());
+                        }
+                    }
+                }
+
+                //add arestas pares a lista
+                retorno.add(vetorVertices[i]);
+            }
+            
+        }
+
+        return retorno;
+    }
+
+    /**
+     * Metodo que diz se o grafo corrente é eureliano
+     * @return Retorna TRUE caso seja um grafo eureliano e FALSE caso contrario
+     */
+    public boolean euleriano(){
+        //Teorema: Um multigrafo M é euleriano se e somente se M é conexo e cada vértice de M tem grau par.
+        Vertice[] vetorVertices = new Vertice[vertices.size()];
+        vetorVertices = vertices.allElements(vetorVertices);
+
+        for (Vertice vertice : vetorVertices) {
+            if(vertice.arestasNumber() == 0)
+                return false;
+
+            if(vertice.arestasNumber() % 2 != 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Método que verifica a existencia de uma aresta comum entre dois vértices.
+     *
+     * @param idVertice id do vertice
+     * @param verticeB vertice para ser comparado.
+     * @return Retorna a aresta em comum caso ela exista, ou retorna NULL caso não exista relação dos vertices com essa aresta.
+     */
     public Vertice existeVertice(int idVertice) {
         return this.vertices.find(idVertice);
     }
+
     /**
      * Método que verifica a existencia de uma aresta comum entre dois vértices.
      *
@@ -52,19 +119,10 @@ public abstract class Grafo implements Serializable {
      * @param verticeB vertice para ser comparado.
      * @return Retorna a aresta em comum caso ela exista, ou retorna NULL caso não exista relação dos vertices com essa aresta.
      */
-    public Aresta existeAresta(Vertice verticeA, Vertice verticeB) {
-        Aresta[] arestasVertice1 = new Aresta[verticeA.arestasNumber()];
-        Aresta[] arestasVertice2 = new Aresta[verticeB.arestasNumber()];
-        verticeA.getArestas().allElements(arestasVertice1);
-        verticeB.getArestas().allElements(arestasVertice2);
-
-        for (Aresta aresta : arestasVertice1) {
-            for (Aresta value : arestasVertice2) {
-                if (aresta.equals(value))
-                    return aresta;
-            }
-        }
-        return null;
+    public Aresta existeAresta(int  verticeA, int verticeB) {
+       
+        //No caso de bidirecional podemos fazer assim. Caso seja unidirecional devemos conferir pros dois lados
+        return this.vertices.get(verticeA).existeAresta(verticeB);
     }
 
     /**
@@ -75,13 +133,31 @@ public abstract class Grafo implements Serializable {
     public boolean completo() {
         Vertice[] vetorVertices = new Vertice[vertices.size()];
         vetorVertices = vertices.allElements(vetorVertices);
-        for (int i = 0; i < vetorVertices.length; i++) {
-            if (vetorVertices[i].arestasNumber() % 2 != 0)
-                return false;
+        
+        //Verificar isso aqui. Se for um unico vertice com um ciclo é completo ?
+        if(vetorVertices.length == 1)
+            return true;
+        
+        for(int i=0; i<vetorVertices.length; i++){
+
+            for(int j=0; j < vetorVertices.length; i++){
+                
+                if(i==j)
+                    continue;
+
+                if(vetorVertices[i].existeAresta(vetorVertices[j].getId()) == null )
+                    return false;
+            }
         }
         return true;
     }
 
+    /**
+     * Método que retorna um subgrafo do grafo atual a partir da lista de vertices dada
+     *
+     * @param vertices Lista de vertices a ser retornada como grafo.
+     * @return Retorna um Grafo.
+     */
     public abstract Grafo subGrafo(Lista<Vertice> vertices);
 
     public int tamanho() {
@@ -99,6 +175,10 @@ public abstract class Grafo implements Serializable {
         return arestaNumber + verticesNumber;
     }
 
+    /**
+     * Método que retorna a ordem do grafo atual
+     * @return um int representando a ordem do grafo atual.
+     */
     public int ordem() {
         return this.vertices.size();
     }

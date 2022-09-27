@@ -24,13 +24,14 @@
 
 public class Vertice {
 
-
     private ABB<Aresta> arestas;
+
     private final int id;
     private boolean visitado;
 
     /**
-     * Construtor para criação de vértice identificado
+     * Construtor para
+     * criação de vértice identificado
      * @param id Número/id do vértice a ser criado (atributo final).
      */
     public Vertice(int id){
@@ -92,9 +93,15 @@ public class Vertice {
 
         return retorno;
     }
+
+    //#region Getters & Setters
     public ABB<Aresta> getArestas() {
         return arestas;
     }
+    public int getId() {
+        return id;
+    }
+    //#endregion
 
 
 }

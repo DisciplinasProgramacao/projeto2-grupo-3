@@ -1,15 +1,26 @@
 public class GrafoCompleto extends Grafo {
     private int ordem;
 
+    //TODO ORDEM DO GRAFO TEM QUE SER CALCULADA DEPOIS DELE ESTAR PREENCHIDO
     public GrafoCompleto(String nome) {
         super(nome);
         ordem = retornaOrdemGrafo();
     }
 
+    /**
+     * Cria um grafo Completo de acordo com um número de vértices.
+     * @param quantidadeVertices quantidade de vértices que existirão no grafo.
+     * @param nome Nome do grafo
+     * @return Retorna um grafo completo
+     */
+    public GrafoCompleto gerarGrafoCompleto(int quantidadeVertices, String nome) {
+        int indiceGrafo = 1;
+        GrafoCompleto grafoCompleto = new GrafoCompleto(nome);
+        Vertice[] vetorVertices = new Vertice[quantidadeVertices];
+        for (int i = 0; i < vetorVertices.length; i++) {
+            vetorVertices[i] = new Vertice(indiceGrafo);
+        }
 
-    public GrafoCompleto gerarGrafoCompleto() {
-        GrafoCompleto grafoCompleto = new GrafoCompleto("Grafo 01");
-        Vertice[] vetorVertices = new Vertice[vertices.size()];
         vetorVertices = vertices.allElements(vetorVertices);
         for (int i = 0; i < vetorVertices.length; i++) {
 
@@ -19,11 +30,12 @@ public class GrafoCompleto extends Grafo {
                     vetorVertices[i].addAresta(aresta.getDestino());
                 }
             }
-            
         }
-            
-
-        return null;
+        for (Vertice vetorVertex : vetorVertices) {
+            grafoCompleto.vertices.add(indiceGrafo, vetorVertex);
+            indiceGrafo++;
+        }
+        return grafoCompleto;
     }
 
 

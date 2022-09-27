@@ -93,8 +93,7 @@ public abstract class GrafoMutavel extends Grafo {
     /**
      * Deleta arquivo a partir de origem e destiino
      * 
-     * @param origem int que representa a origem da aresta
-     * @param destino int que representa o destino da arest
+     * @param idVertice int que representa o id do vertice
      * @return retorna TRUE caso a exclusão seja bem sucedida e FALSE caso contrario
      */
     public boolean delVertice(int idVertice) {

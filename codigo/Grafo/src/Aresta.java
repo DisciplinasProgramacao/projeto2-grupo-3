@@ -25,7 +25,7 @@
 public class Aresta {
 
     //#region Atributos
-    private int peso;
+    private final int peso;
     private int destino;
     private boolean visitada;
     //#endregion

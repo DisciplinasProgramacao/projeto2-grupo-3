@@ -35,7 +35,7 @@ public class Vertice {
      */
     public Vertice(int id) {
         this.id = id;
-        this.arestas = new ABB<Aresta>();
+        this.arestas = new ABB<>();
         this.visitado = false;
     }
     //#endregion

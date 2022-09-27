@@ -33,8 +33,14 @@ public class GrafoCompleto extends Grafo {
         for (Vertice vertice : v) {
             vertices.add(vertice.getId(), vertice);
         }
+
     }
 
+    /**
+     * Gera um subgrafo de acordo com a quantidade de vertices
+     * @param vertices Lista de vertices a ser retornada como grafo.
+     * @return Um grafo com os vértices que foram passados.
+     */
     @Override
     public Grafo subGrafo(Lista<Vertice> vertices) {
         return new GrafoCompleto(vertices.size(), "Grafo completo tamanho " + vertices.size());

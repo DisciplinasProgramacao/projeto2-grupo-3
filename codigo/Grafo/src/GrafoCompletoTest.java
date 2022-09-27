@@ -1,20 +1,20 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class GrafoCompletoTest {
 
+    private static GrafoCompleto grafo;
+    @BeforeAll
+    public void criarInstancia(){
+        grafo = new GrafoCompleto(8, "Grafo completo com 8 vertices");
+    }
+
     @Test
-    public void criaCertoGrafo() {
-        GrafoCompleto grafo = new GrafoCompleto("Grafo01Teste");
-        Vertice[] vetorVertices = new Vertice[5];
-        int indiceVertice = 0;
-        for (int i = 0; i < vetorVertices.length; i++) {
-            vetorVertices[i] = new Vertice(indiceVertice);
-            indiceVertice++;
-        }
-        for (Vertice vetorVertex : vetorVertices) {
-            grafo.vertices.add(indiceVertice, vetorVertex);
-        }
-        grafo.gerarGrafoCompleto(5,"Cruzeiro");
+    public void verSeEhRealmenteUmGrafoCompleto(){
+        assertEquals(8, grafo.vertices.size());
+        //Vertice[]  v = new Vertice[]
+        //assertEquals(8, grafo.ver);
     }
 }

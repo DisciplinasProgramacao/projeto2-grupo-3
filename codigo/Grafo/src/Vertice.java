@@ -77,6 +77,7 @@ public class Vertice {
     public int arestasNumber(){
         return this.arestas.size();
     }
+    
     public boolean delAresta(int destino){
         
         var retorno = false;

@@ -17,5 +17,8 @@ public class Lista<T> {
         T[] allData = this.data.toArray(array);
         return allData;
     }
+    public int size(){
+        return data.size();
+    }
 
 }

@@ -8,6 +8,10 @@ public class ABB<T> {
         this.data = new TreeMap<>();
     }
 
+    public T get(Integer i){
+        return data.get(i);
+    }
+
     public T find(int key){
         return this.data.get(key);
     }

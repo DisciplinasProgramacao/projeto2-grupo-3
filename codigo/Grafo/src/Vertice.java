@@ -48,7 +48,9 @@ public class Vertice {
     public boolean addAresta(int destino) {
         return this.arestas.add(destino, new Aresta(0, destino));
     }
-
+    public boolean addAresta(int destino,int peso) {
+        return this.arestas.add(destino, new Aresta(peso, destino));
+    }
     /**
      * Verifica se já existe aresta entre este vértice e um destino. Método privado
      * @param destino Vértice de destino

@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.TreeMap;
 
-public class ABB<T> {
+public class ABB<T> implements Serializable {
 
     private TreeMap<Integer, T> data;
 
@@ -49,5 +50,34 @@ public class ABB<T> {
 
     public Integer[] allKeys(){
         return (Integer[])this.data.keySet().toArray();
+    }
+    @Override
+    public boolean equals(Object o) {
+ 
+        // If the object is compared with itself then return true 
+        if (o == this) {
+            return true;
+        }
+ 
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof GrafoMutavel)) {
+            return false;
+        }
+         
+        // typecast o to Complex so that we can compare data members
+        ABB<T> abb = (ABB<T>) o;
+         
+        // Compare the data members and return accordingly
+        //Corrigi isso aqui. O usuario não pode ter acesso ao Data. MAs to com pressa
+        return data.equals(abb.getData());
+    }
+
+    public TreeMap<Integer, T> getData() {
+        return data;
+    }
+
+    public void setData(TreeMap<Integer, T> data) {
+        this.data = data;
     }
 }

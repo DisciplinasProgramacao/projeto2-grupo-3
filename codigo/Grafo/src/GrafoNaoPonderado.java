@@ -1,15 +1,16 @@
-public class GrafoPonderado extends GrafoMutavel {
-
-    public GrafoPonderado(String nome){
+public class GrafoNaoPonderado extends GrafoMutavel{
+    
+    public GrafoNaoPonderado(String nome) {
         super(nome);
     }
-    private GrafoPonderado(String nome, ABB<Vertice> lista) {
+    
+    private GrafoNaoPonderado(String nome, ABB<Vertice> lista) {
         super(nome);
         this.vertices = lista;
     }
 
     @Override
-    public GrafoPonderado subGrafo(Lista<Vertice> vertices) {
+    public GrafoNaoPonderado subGrafo(Lista<Vertice> vertices) {
         ABB<Vertice> lista = new ABB<>();
         Vertice[] verticesOriginal = new Vertice[this.vertices.size()];
         verticesOriginal = this.vertices.allElements(verticesOriginal);
@@ -32,22 +33,7 @@ public class GrafoPonderado extends GrafoMutavel {
             }
         }
 
-        return new GrafoPonderado("Subgrafo do grafo " + this.nome , lista);
-    }
+        return new GrafoNaoPonderado("Subgrafo do grafo " + this.nome , lista);
 
-    public boolean addAresta(int origem, int destino, int peso) {
-
-        boolean adicionou = false;
-
-        Vertice saida = this.existeVertice(origem);
-        Vertice chegada = this.existeVertice(destino);
-
-        if (saida != null && chegada != null) {
-            saida.addAresta(destino,peso);
-            chegada.addAresta(origem, peso);
-            adicionou = true;
-        }
-
-        return adicionou;
     }
 }

@@ -102,4 +102,24 @@ public abstract class GrafoMutavel extends Grafo {
         return vertices.remove(idVertice);
     }
 
+    @Override
+    public boolean equals(Object o) {
+ 
+        // If the object is compared with itself then return true 
+        if (o == this) {
+            return true;
+        }
+ 
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof GrafoMutavel)) {
+            return false;
+        }
+         
+        // typecast o to Complex so that we can compare data members
+        GrafoMutavel g = (GrafoMutavel) o;
+         
+        // Compare the data members and return accordingly
+        return vertices.equals(g.getVertices()) && nome.equals(g.getNome());
+    }
 }

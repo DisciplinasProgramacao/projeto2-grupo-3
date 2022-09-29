@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * MIT License
  * <p>
@@ -22,7 +24,7 @@
  * SOFTWARE.
  */
 
-public class Aresta {
+public class Aresta implements Serializable{
 
     //#region Atributos
     private final int peso;
@@ -42,6 +44,14 @@ public class Aresta {
         this.visitada = false;
     }
     //#region Métodos públicos
+
+    public void setDestino(int destino) {
+        this.destino = destino;
+    }
+
+    public void setVisitada(boolean visitada) {
+        this.visitada = visitada;
+    }
 
     /**
     * Marca a arresta como visitada
@@ -75,4 +85,24 @@ public class Aresta {
         return this.visitada;
     }
     //#endregion
+
+    public boolean equals(Object o) {
+ 
+        // If the object is compared with itself then return true 
+        if (o == this) {
+            return true;
+        }
+ 
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof Aresta)) {
+            return false;
+        }
+         
+        // typecast o to Complex so that we can compare data members
+        Aresta a = (Aresta) o;
+         
+        // Compare the data members and return accordingly
+        return peso == a.getPeso() && destino == a.getDestino();
+    }
 }

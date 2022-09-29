@@ -32,6 +32,18 @@ public abstract class Grafo implements Serializable {
     private static final long serialVersionUID = 7100179587555243994L;
     protected final String nome;
     protected int[] tempoDescoberta;
+    public String getNome() {
+        return nome;
+    }
+
+    public ABB<Vertice> getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(ABB<Vertice> vertices) {
+        this.vertices = vertices;
+    }
+
     protected int[] tempoTermino;
     protected Vertice[] verticesGrafo;
     protected int tempo = 0;
@@ -46,6 +58,18 @@ public abstract class Grafo implements Serializable {
     public Grafo(String nome) {
         this.nome = nome;
         this.vertices = new ABB<>();
+    }
+
+    public int arrestasNumber(){
+
+        int arrestas = 0;
+        Vertice[] v = new Vertice[vertices.size()];
+        v = vertices.allElements(v);
+        for (Vertice vertice : v) {
+            arrestas += vertice.arestasNumber();
+        }
+
+        return arrestas;
     }
 
     public Lista<Vertice> caminhoEureliano() {
@@ -220,6 +244,10 @@ public abstract class Grafo implements Serializable {
         return arestaNumber + verticesNumber;
     }
 
+    public int verticesNumber(){
+        return vertices.size();
+    }
+    
     /**
      * Método que retorna a ordem do grafo atual
      *

@@ -23,4 +23,19 @@ public class GrafoCompletoTest {
         }
         assertTrue(resposta);
     }
+
+    @Test
+    public void verificaSubgrafo(){
+        Lista<Vertice> vercices = new Lista<>();
+        for(int i=0; i<4; i++){
+            Vertice vercice = new Vertice(i);
+            vercices.add(vercice);
+        }
+
+        grafo = (GrafoCompleto)grafo.subGrafo(vercices);
+
+        verSeEhRealmenteUmGrafoCompleto();
+
+        assertTrue(grafo.vertices.size() == 4);
+    }
 }

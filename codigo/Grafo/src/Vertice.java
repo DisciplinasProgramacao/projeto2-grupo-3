@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * MIT License
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -18,7 +20,7 @@
  * SOFTWARE.
  */
 
-public class Vertice {
+public class Vertice implements Serializable{
     //#region Atributos
     private ABB<Aresta> arestas;
 
@@ -38,8 +40,15 @@ public class Vertice {
         this.arestas = new ABB<>();
         this.visitado = false;
     }
+    public int arrestasNumber(){
+        return this.arestas.size();
+    }
     //#endregion
     //#region Métodos
+
+    public void setArestas(ABB<Aresta> arestas) {
+        this.arestas = arestas;
+    }
 
     /**
      * Adiciona uma aresta neste vértice para um destino
@@ -120,4 +129,32 @@ public class Vertice {
         return this.visitado;
     }
     //#endregion
+
+    public boolean equals(Object o) {
+ 
+        // If the object is compared with itself then return true 
+        if (o == this) {
+            return true;
+        }
+ 
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof GrafoMutavel)) {
+            return false;
+        }
+         
+        // typecast o to Complex so that we can compare data members
+        Vertice v = (Vertice) o;
+         
+        // Compare the data members and return accordingly
+        return arestas.equals(v.getArestas()) && id == v.getId();
+    }
+
+    public boolean isVisitado() {
+        return visitado;
+    }
+
+    public void setVisitado(boolean visitado) {
+        this.visitado = visitado;
+    }
 }

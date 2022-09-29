@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Lista<T> {
+public class Lista<T> implements Serializable{
 
     private LinkedList<T> data;
 
@@ -17,6 +18,11 @@ public class Lista<T> {
         T[] allData = this.data.toArray(array);
         return allData;
     }
+    
+    public boolean exist(T element){
+        return data.contains(element);
+    }
+    
     public int size(){
         return data.size();
     }

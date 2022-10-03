@@ -28,10 +28,11 @@ import java.io.Serializable;
  * Classe básica para um Grafo simples
  */
 public abstract class Grafo implements Serializable {
-
+    //#region Atributos
     private static final long serialVersionUID = 7100179587555243994L;
     protected final String nome;
     protected int[] tempoDescoberta;
+
     public String getNome() {
         return nome;
     }
@@ -49,6 +50,7 @@ public abstract class Grafo implements Serializable {
     protected int tempo = 0;
     protected Integer[] pai;
     protected ABB<Vertice> vertices;
+    //#endregion
 
     /**
      * Construtor. Cria um grafo vazio com capacidade para MAX_VERTICES
@@ -60,12 +62,14 @@ public abstract class Grafo implements Serializable {
         this.vertices = new ABB<>();
     }
 
+    //#region metodos
+
     /**
      * Método que retorna o numero de arrestas do grafo
      *
      * @return um valor inteiro representando o numero de arestas do grafo
      */
-    public int arrestasNumber(){
+    public int arrestasNumber() {
 
         int arrestas = 0;
 
@@ -84,36 +88,44 @@ public abstract class Grafo implements Serializable {
      * @return null caso não seja possivel retoenar um caminho eureliano, e uma Lista<Vertice> com um caminho caso contrario
      */
     public Lista<Vertice> caminhoEureliano() {
-        
-        if(!euleriano())
+
+        if (!euleriano())
             return null;
-        
+
         Lista<Vertice> retorno = new Lista<>();
-        
+
         verticesGrafo = new Vertice[vertices.size()];
         verticesGrafo = vertices.allElements(verticesGrafo);
-        
+
         percorre(retorno, verticesGrafo[0]);
-        
+
         return retorno;
     }
 
+    /**
+     * Método utilizado no método publico caminho euleriano, que caminha entre as arestas nao visitadas
+     *
+     * @param retorno lista que armazena os retornos do método
+     * @param vertice o vértice de inicio do método.
+     */
+
     private void percorre(Lista<Vertice> retorno, Vertice vertice) {
         retorno.add(vertice);
-        
+
         var arestas = vertice.getArestas();
         var arestasArray = new Aresta[arestas.size()];
         arestasArray = arestas.allElements(arestasArray);
 
-        for(int i=0; i< arestas.size(); i++){
-            if(!arestasArray[i].isVisitada()){
+        for (int i = 0; i < arestas.size(); i++) {
+            if (!arestasArray[i].isVisitada()) {
                 arestasArray[i].visitar();
             }
         }
     }
 
     /**
-     * Metodo que diz se o grafo corrente é eureliano
+     * método que inicializa a busca em profundidade para poder utilizar a recursão
+     * @param vertice vértice onde a busca começará
      */
     public void inicializaBuscaProfundidade(Vertice vertice) {
 
@@ -130,6 +142,10 @@ public abstract class Grafo implements Serializable {
         }
     }
 
+    /**
+     * método que executa uma busca em profundidade no grafo
+     * @param vertice o vértice de início da busca
+     */
     private void buscaProfundidade(Vertice vertice) {
         tempo += 1;
         tempoDescoberta[vertice.getId()] = tempo;
@@ -141,8 +157,7 @@ public abstract class Grafo implements Serializable {
                 aresta.visitar();
                 pai[aresta.getDestino()] = vertice.getId();
                 buscaProfundidade(verticesGrafo[aresta.getDestino()]);
-            }
-            else if (tempoTermino[aresta.getDestino()] == 0 && aresta.getDestino() != pai[vertice.getId()]) {
+            } else if (tempoTermino[aresta.getDestino()] == 0 && aresta.getDestino() != pai[vertice.getId()]) {
                 aresta.visitar();
             }
         }
@@ -150,6 +165,11 @@ public abstract class Grafo implements Serializable {
         tempoTermino[vertice.getId()] = tempo;
     }
 
+    /**
+     * percorre um vetor e verifica a existencia de um valor zero, caso exista, retorna true.
+     * @param vetor vetor à ser verificado
+     * @return True se existir 0, False se não existir
+     */
     private boolean existeZero(int[] vetor) {
         for (int number : vetor) {
             if (number == 0)
@@ -158,7 +178,10 @@ public abstract class Grafo implements Serializable {
         return false;
     }
 
-    //#region metodos
+    /**
+     * Método que verifica se um grafo atende as condições de ser euleriano
+     * @return True se for euleriano, False se não for
+     */
     public boolean euleriano() {
         //Teorema: Um multigrafo M é euleriano se e somente se M é conexo e cada vértice de M tem grau par.
         Vertice[] vetorVertices = new Vertice[vertices.size()];
@@ -253,10 +276,10 @@ public abstract class Grafo implements Serializable {
      *
      * @return um valor inteiro representando o numero de vertices.
      */
-    public int verticesNumber(){
+    public int verticesNumber() {
         return vertices.size();
     }
-    
+
     /**
      * Método que retorna a ordem do grafo atual
      *

@@ -9,6 +9,11 @@ public class GrafoNaoPonderado extends GrafoMutavel{
         this.vertices = lista;
     }
 
+    /**
+     * Método que cria um subgrafo a partir da lista de vertices de entrada
+     * @param vertices Lista de vertices a ser retornada como grafo.
+     * @return um subgrafo não ponderado
+     */
     @Override
     public GrafoNaoPonderado subGrafo(Lista<Vertice> vertices) {
         ABB<Vertice> lista = new ABB<>();

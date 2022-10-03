@@ -157,4 +157,18 @@ public class Vertice implements Serializable{
     public void setVisitado(boolean visitado) {
         this.visitado = visitado;
     }
+
+    public boolean allArestasVisited() {
+        
+        Aresta[] a = new Aresta[arestas.size()];
+        a = arestas.allElements(a);
+
+        for (Aresta aresta : a) {
+            if(!aresta.isVisitada()){
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

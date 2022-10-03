@@ -60,9 +60,15 @@ public abstract class Grafo implements Serializable {
         this.vertices = new ABB<>();
     }
 
+    /**
+     * Método que retorna o numero de arrestas do grafo
+     *
+     * @return um valor inteiro representando o numero de arestas do grafo
+     */
     public int arrestasNumber(){
 
         int arrestas = 0;
+
         Vertice[] v = new Vertice[vertices.size()];
         v = vertices.allElements(v);
         for (Vertice vertice : v) {
@@ -72,45 +78,43 @@ public abstract class Grafo implements Serializable {
         return arrestas;
     }
 
+    /**
+     * Método retorna um caminho eureliano para o grafo
+     *
+     * @return null caso não seja possivel retoenar um caminho eureliano, e uma Lista<Vertice> com um caminho caso contrario
+     */
     public Lista<Vertice> caminhoEureliano() {
-
+        
+        if(!euleriano())
+            return null;
+        
         Lista<Vertice> retorno = new Lista<>();
-        Vertice[] vetorVertices = new Vertice[vertices.size()];
-        vetorVertices = vertices.allElements(vetorVertices);
-
-        for (int i = 0; i < vetorVertices.length; i++) {
-            //Retirando desconexos e desconexos com laços
-            if (vetorVertices[i].arestasNumber() == 0 || (vetorVertices[i].arestasNumber() == 1 && vetorVertices[i].existeAresta(vetorVertices[i].getId()) != null)) {
-                vetorVertices[i] = null;
-            }
-
-            if (vetorVertices[i] != null) {
-                //Torna as vertices pares pra cada aresta
-                if (vetorVertices[i].arestasNumber() % 2 != 0) {
-                    for (int j = 0; j < vetorVertices.length; j++) {
-
-                        if (i == j)
-                            continue;
-
-                        if (existeAresta(vetorVertices[i].getId(), vetorVertices[j].getId()) == null) {
-                            vetorVertices[i].addAresta(vetorVertices[j].getId());
-                        }
-                    }
-                }
-
-                //add arestas pares a lista
-                retorno.add(vetorVertices[i]);
-            }
-
-        }
-
+        
+        verticesGrafo = new Vertice[vertices.size()];
+        verticesGrafo = vertices.allElements(verticesGrafo);
+        
+        percorre(retorno, verticesGrafo[0]);
+        
         return retorno;
+    }
+
+    private void percorre(Lista<Vertice> retorno, Vertice vertice) {
+        retorno.add(vertice);
+        
+        var arestas = vertice.getArestas();
+        var arestasArray = new Aresta[arestas.size()];
+        arestasArray = arestas.allElements(arestasArray);
+
+        for(int i=0; i< arestas.size(); i++){
+            if(!arestasArray[i].isVisitada()){
+                arestasArray[i].visitar();
+            }
+        }
     }
 
     /**
      * Metodo que diz se o grafo corrente é eureliano
      */
-
     public void inicializaBuscaProfundidade(Vertice vertice) {
 
         tempoDescoberta = new int[vertices.size()];
@@ -175,7 +179,7 @@ public abstract class Grafo implements Serializable {
      * Método que verifica a existencia de uma aresta comum entre dois vértices.
      *
      * @param idVertice id do vertice
-     * @return Retorna a aresta em comum caso ela exista, ou retorna NULL caso não exista relação dos vertices com essa aresta.
+     * @return Retorna a vertice caso ela exista, ou retorna NULL caso não exista.
      */
     public Vertice existeVertice(int idVertice) {
         return this.vertices.find(idVertice);
@@ -244,6 +248,11 @@ public abstract class Grafo implements Serializable {
         return arestaNumber + verticesNumber;
     }
 
+    /**
+     * Método que o numero de vertices
+     *
+     * @return um valor inteiro representando o numero de vertices.
+     */
     public int verticesNumber(){
         return vertices.size();
     }

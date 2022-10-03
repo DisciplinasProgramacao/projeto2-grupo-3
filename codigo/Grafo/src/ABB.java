@@ -1,7 +1,8 @@
 import java.io.Serializable;
 import java.util.TreeMap;
 
-public class ABB<T> implements Serializable {
+public class 
+ABB<T> implements Serializable {
 
     private TreeMap<Integer, T> data;
 
@@ -48,9 +49,18 @@ public class ABB<T> implements Serializable {
         return allData;
     }
 
+    public void setAllElements(T[] array){
+        
+        this.data.clear();
+        for(int i=0; i<array.length; i++){
+            this.data.put(i, array[i]);
+        }
+    }
+
     public Integer[] allKeys(){
         return (Integer[])this.data.keySet().toArray();
     }
+
     @Override
     public boolean equals(Object o) {
  
